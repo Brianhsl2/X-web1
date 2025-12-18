@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - XEnablers.ai</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <header>
+    <nav>
+        <!-- Replace the text logo with an image -->
+        <img src="logo.jpeg" alt="XEnablers.ai logo" class="logo">
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+     <main>
+        
+<section class="contact">
+    <h2>Building Your AI Future Together</h2>
+    <form id="contact-form">
+        <input type="text" name="name" placeholder="Your Name" required maxlength="100" pattern="[A-Za-z\s\-']+" title="Please enter a valid name">
+        <input type="email" name="email" placeholder="Your Email" required>
+         <input type="tel" name="tel" placeholder="Your Phone (Optional)" >
+         <input type="hidden" name="key" placeholder="g-recaptcha-response" >
+
+        <!-- add description of the message -->
+        <!-- this message asks the client to give a brief description of what they want to discuss -->
+        <div class="form-label">What's on your mind</div>
+
+        <textarea name="messageText" placeholder="Your Message" required></textarea>
+        
+        <!-- Google reCAPTCHA widget -->
+        <div class="g-recaptcha" data-sitekey="6LdRKBYsAAAAAOUIke0azmQ6IiiCR2Y1Mr3oi_4S"></div>
+        
+        <!-- Hidden field for reCAPTCHA token -->
+        <input type="hidden" name="g-recaptcha-response" id="recaptcha-token">
+        
+        <button type="submit">Let's Talk</button>
+    </form>
+</section>
+
+    </main>
+    <footer>
+        <p>&copy; 2025 (build out pages2) XEnablers.ai. All rights reserved.</p>
+    </footer>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+  // 1. Initialize EmailJS with your public key
+  (function() {
+    emailjs.init({
+      // account public key
+      publicKey: "ExICYl0Y8dAfYa91f",   // <- replace this - tl8.nv.llc@gmail.com
+    });
+  })();
+
+  // 2. Hook into the form submit event
+  const form = document.getElementById("contact-form");
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault(); // stop normal form submission
+
+    // Validate reCAPTCHA
+    const recaptchaResponse = grecaptcha.getResponse();
+    if (!recaptchaResponse) {
+      alert("Please complete the reCAPTCHA verification.");
+      return;
+    }
+
+    // Add reCAPTCHA token to hidden field for EmailJS template
+    document.getElementById("recaptcha-token").value = recaptchaResponse;
+
+    // service id & template id
+    emailjs
+      .sendForm("service_8w07d94", "template_962lb6n", this)      // tl8.nv.llc@gmail.com
+      .then(
+        function () {
+          alert("Thanks! Your message has been sent.");
+          form.reset();
+          grecaptcha.reset(); // Reset reCAPTCHA after successful submission
+        },
+        function (error) {
+          console.error("EmailJS error:", error);
+          alert("Sorry, something went wrong. Please try again later.");
+          grecaptcha.reset(); // Reset reCAPTCHA on error too
+        }
+      );
+  });
+</script>
+
+</body>
+</html>

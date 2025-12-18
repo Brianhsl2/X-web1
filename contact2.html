@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - XEnablers.ai</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="logo.jpeg" alt="XEnablers.ai logo" class="logo">
+      <div class="title">
+        <div class="name">XEnablers.ai</div>
+        <div class="tag">Outcome-First, Technology-Last</div>
+      </div>
+    </div>
+    <div class="sideNav">
+      <a href="index1.html">Home</a>
+      <a href="about1.html">About</a>
+      <a href="services1.html">Services</a>
+      <a href="contact2.html">Contact for Information</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section class="contact">
+      <h2>Building Your AI Future Together</h2>
+      <form id="contact-form">
+        <input type="text" name="name" placeholder="Your Name" required maxlength="100" pattern="[A-Za-z\s\-']+" title="Please enter a valid name">
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="phone" name="phone" placeholder="Your Phone (Optional)" >
+
+        <!-- add description of the message -->
+        <!-- this message asks the client to give a brief description of what they want to discuss -->
+        <div style="margin: 16px 0; color: white; font-weight: bold;">What's on your mind</div>
+
+        <textarea name="messageText" placeholder="Your Message" required></textarea>
+        <button type="submit">Let's Talk</button>
+      </form>
+    </section>
+
+  </main>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2025 XEnablers.ai. All rights reserved.</p>
+</footer>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+  // 1. Initialize EmailJS with your public key
+  (function() {
+    emailjs.init({
+      publicKey: "ExICYl0Y8dAfYa91f",   // <- replace this
+    });
+  })();
+
+  // 2. Hook into the form submit event
+  const form = document.getElementById("contact-form");
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault(); // stop normal form submission
+
+    emailjs
+      .sendForm("service_8w07d94", "template_962lb6n", this)
+      .then(
+        function () {
+          alert("Thanks! Your message has been sent.");
+          form.reset();
+        },
+        function (error) {
+          console.error("EmailJS error:", error);
+          alert("Sorry, something went wrong. Please try again later.");
+        }
+      );
+  });
+</script>
+</body>
+</html>

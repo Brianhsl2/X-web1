@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>XEnablers.ai — Contact</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
 
@@ -13,7 +14,7 @@
 <aside class="sidebar">
   <a href="metrics.html" class="navArrow">←</a>
   <div class="brand">
-    <div class="logo">X</div>
+    <img src="logo.jpeg" alt="XEnablers.ai logo" class="logo">
     <div class="title">
       <div class="name">XEnablers.ai</div>
       <div class="tag">Outcome-First, Technology-Last</div>
@@ -25,7 +26,7 @@
 <a data-navlink href="diagnostic.html"><span>Diagnostic</span><span class="pill">3/6</span></a>
 <a data-navlink href="offer.html"><span>Offer & Pricing</span><span class="pill">4/6</span></a>
 <a data-navlink href="metrics.html"><span>Metrics</span><span class="pill">5/6</span></a>
-<a data-navlink href="contact.html"><span>Contact</span><span class="pill">6/6</span></a>
+<a data-navlink href="contact.html"><span>Contact for Assessment</span><span class="pill">6/6</span></a>
   </div>
   <a href="#" class="navArrow disabled" style="opacity:0.3;pointer-events:none;">→</a>
   <div class="sideFooter">
@@ -81,12 +82,19 @@
       <h3>Contact</h3>
       <p>Wire this form to HubSpot, Salesforce, or an email endpoint.</p>
       <div class="hr"></div>
-      <form onsubmit="event.preventDefault(); alert('Thanks — connect this form to your CRM or email service.');">
+      <form id="contact-form" onsubmit="event.preventDefault(); handleFormSubmit();">
         <div style="display:grid; gap:10px">
-          <input required placeholder="Name" style="padding:10px 12px;border-radius:16px;border:1px solid rgba(30,41,59,.85);background:rgba(15,23,42,.65);color:#fff;font-weight:800;font-size:13px"/>
-          <input required type="email" placeholder="Work email" style="padding:10px 12px;border-radius:16px;border:1px solid rgba(30,41,59,.85);background:rgba(15,23,42,.65);color:#fff;font-weight:800;font-size:13px"/>
-          <input required placeholder="Company / department" style="padding:10px 12px;border-radius:16px;border:1px solid rgba(30,41,59,.85);background:rgba(15,23,42,.65);color:#fff;font-weight:800;font-size:13px"/>
-          <textarea placeholder="Workflow you want to improve (optional)" style="padding:10px 12px;border-radius:16px;border:1px solid rgba(30,41,59,.85);background:rgba(15,23,42,.65);color:#fff;font-weight:800;font-size:13px;min-height:110px"></textarea>
+          <input required name="name" placeholder="Name" style="padding:10px 12px;border-radius:16px;border:1px solid rgba(30,41,59,.85);background:rgba(15,23,42,.65);color:#fff;font-weight:800;font-size:13px"/>
+          <input required type="email" name="email" placeholder="Work email" style="padding:10px 12px;border-radius:16px;border:1px solid rgba(30,41,59,.85);background:rgba(15,23,42,.65);color:#fff;font-weight:800;font-size:13px"/>
+          <input required name="company" placeholder="Company / department" style="padding:10px 12px;border-radius:16px;border:1px solid rgba(30,41,59,.85);background:rgba(15,23,42,.65);color:#fff;font-weight:800;font-size:13px"/>
+          <textarea name="workflow" placeholder="Workflow you want to improve (optional)" style="padding:10px 12px;border-radius:16px;border:1px solid rgba(30,41,59,.85);background:rgba(15,23,42,.65);color:#fff;font-weight:800;font-size:13px;min-height:110px"></textarea>
+          
+          <!-- Google reCAPTCHA widget -->
+          <div class="g-recaptcha" data-sitekey="6LdRKBYsAAAAAOUIke0azmQ6IiiCR2Y1Mr3oi_4S" style="margin:10px 0"></div>
+          
+          <!-- Hidden field for reCAPTCHA token -->
+          <input type="hidden" name="g-recaptcha-response" id="recaptcha-token">
+          
           <button class="btn primary" type="submit" style="width:100%">Request an Assessment</button>
         </div>
       </form>
@@ -108,5 +116,27 @@
 </div>
 
 <script src="script.js"></script>
+
+<script>
+  function handleFormSubmit() {
+    // Validate reCAPTCHA
+    const recaptchaResponse = grecaptcha.getResponse();
+    if (!recaptchaResponse) {
+      alert("Please complete the reCAPTCHA verification.");
+      return;
+    }
+
+    // Add reCAPTCHA token to hidden field
+    document.getElementById("recaptcha-token").value = recaptchaResponse;
+
+    // Success - connect this to your CRM or email service
+    alert('Thanks — connect this form to your CRM or email service.');
+    
+    // Reset form and reCAPTCHA after submission
+    document.getElementById("contact-form").reset();
+    grecaptcha.reset();
+  }
+</script>
+
 </body>
 </html>

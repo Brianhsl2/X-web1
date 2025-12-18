@@ -1,0 +1,107 @@
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #000;
+    color: #fff;
+}
+
+
+header {
+    background-color: #111;
+    padding: 1rem 2rem;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    color: #079CDB;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    color: #079CDB;
+}
+
+main {
+    padding: 2rem;
+}
+
+.hero, .about, .services, .contact {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.cta-button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #079CDB;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.service-item {
+    margin: 2rem 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+input, textarea {
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button {
+    padding: 0.75rem;
+    background-color: #079CDB;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+footer {
+    background-color: #111;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
