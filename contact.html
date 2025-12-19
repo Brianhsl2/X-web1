@@ -117,7 +117,17 @@
 
 <script src="script.js"></script>
 
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <script>
+  // Initialize EmailJS with your public key
+  (function() {
+    emailjs.init({
+      publicKey: "ExICYl0Y8dAfYa91f",   // <- replace with your public key
+    });
+  })();
+
   function handleFormSubmit() {
     // Validate reCAPTCHA
     const recaptchaResponse = grecaptcha.getResponse();
@@ -126,15 +136,25 @@
       return;
     }
 
-    // Add reCAPTCHA token to hidden field
+    // Add reCAPTCHA token to hidden field for EmailJS template
     document.getElementById("recaptcha-token").value = recaptchaResponse;
 
-    // Success - connect this to your CRM or email service
-    alert('Thanks — look for a response in your email service.');
-    
-    // Reset form and reCAPTCHA after submission
-    document.getElementById("contact-form").reset();
-    grecaptcha.reset();
+    // Send form via EmailJS
+    const form = document.getElementById("contact-form");
+    emailjs
+      .sendForm("service_8w07d94", "template_962lb6n", form)  // <- replace with your service/template IDs
+      .then(
+        function () {
+          alert("Thanks! Your message has been sent.");
+          form.reset();
+          grecaptcha.reset(); // Reset reCAPTCHA after successful submission
+        },
+        function (error) {
+          console.error("EmailJS error:", error);
+          alert("Sorry, something went wrong. Please try again later.");
+          grecaptcha.reset(); // Reset reCAPTCHA on error too
+        }
+      );
   }
 </script>
 
